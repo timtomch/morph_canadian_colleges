@@ -17,7 +17,7 @@ def parse_page(url):
     college_city = response.xpath('//*[@class="mem-contact"]/p[1]/text()[2]')[0]
     college_postalcode = response.xpath('//*[@class="mem-contact"]/p[1]/text()[3]')[0]
     
-    print "Successfully scraped %s in %s" % (college_name.encode('ascii','ignore'), college_city)
+    #print "Successfully scraped %s in %s" % (college_name.decode('utf-8'), college_city)
     
     try:
         college_nrcampuses = response.xpath('//*[@class="mem-stats"]/div[1]/h2/text()')[0]
