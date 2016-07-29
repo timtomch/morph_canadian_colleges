@@ -17,7 +17,8 @@ def parse_page(url):
     college_city = response.xpath('//*[@class="mem-contact"]/p[1]/text()[2]')[0]
     college_postalcode = response.xpath('//*[@class="mem-contact"]/p[1]/text()[3]')[0]
     
-    college_nrcampuses = response.xpath('//*[@class="mem-stats"]/div[1]/h2/text()')[0]
+    college_nrcampuses = response.xpath('//*[@class="mem-stats"]/div[1]/h2/text()')
+    print college_nrcampuses
     
     college_stats = response.xpath('//*[@class="mem-stats"]/div[2]/ul//li')
     
@@ -30,6 +31,8 @@ def parse_page(url):
         label = to_parse.xpath('//h6')
         
         enrol[label] = value
+    
+    print enrol
     
     scraperwiki.sqlite.save(unique_keys=['url'], 
                             data={
