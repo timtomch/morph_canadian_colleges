@@ -13,8 +13,38 @@ def parse_page(url):
     #Extract elements
     college_name = response.xpath('//*[@class="page-title"]/text()')[0]
     college_url = response.xpath('//*[@class="mem-contact"]/p[2]//a/@href')[0]
+    college_address = response.xpath('//*[@class="mem-contact"]/p[1]/text()[1]')[0]
+    college_city = response.xpath('//*[@class="mem-contact"]/p[1]/text()[2]')[0]
+    college_postalcode = response.xpath('//*[@class="mem-contact"]/p[1]/text()[3]')[0]
     
-    scraperwiki.sqlite.save(unique_keys=['college_url'], data={"college_name": college_name, "college_url": college_url})
+    college_nrcampuses = response.xpath('//*[@class="mem-stats"]/div[1]/h2/text()')[0]
+    
+    college_stats = response.xpath('//*[@class="mem-stats"]/div[2]/ul//li')
+    
+    #enrol = {'Full-time': '', 'Part-time': '', 'International': '', 'Apprentice': '', 'Indigenous': ''}
+    
+    
+    for stat in college_stats:
+        to_parse = lxml.html.fromstring(stat)
+        value = to_parse.xpath('//h2')
+        label = to_parse.xpath('//h6')
+        
+        enrol[label] = value
+    
+    scraperwiki.sqlite.save(unique_keys=['url'], 
+                            data={
+                                "name": college_name,
+                                "url": college_url,
+                                "address": college_address,
+                                "city": college_city,
+                                "postalcode": college_postalcode,
+                                "nr_campus": college_nrcampuses,
+                                "enrol_fulltime": enrol.get('Full-time', None),
+                                "enrol_parttime": enrol.get('Part-time', None),
+                                "enrol_international": enrol.get('International', None),
+                                "enrol_apprentice": enrol.get('Apprentice', None),
+                                "enrol_indigenous": enrol.get('Indigenous', None)
+                                })
 
 # # Read in a page
 html = scraperwiki.scrape("http://www.collegesinstitutes.ca/our-members/member-directory/")
