@@ -4,6 +4,18 @@
 import scraperwiki
 import lxml.html
 #
+
+def parse_page(url):
+    #Read in page
+    html = scraperwiki.scrape(url)
+    response = lxml.html.fromstring(html)
+    
+    #Extract elements
+    college_name = response.xpath('//*[@class="page-title"]/text()')
+    college_url = response.xpath('//*[@class="mem-contact"]/p[2]//a/@href')
+    
+    scraperwiki.sqlite.save(unique_keys=['college_name'], data={"college_name": college_name, "college_url": college_url})
+
 # # Read in a page
 html = scraperwiki.scrape("http://labs.timtom.ch/swc-teaching-notes/webscraping/data/www.collegesinstitutes.ca/our-members/member-directory/")
 #
@@ -12,7 +24,7 @@ root = lxml.html.fromstring(html)
 links = root.xpath('//ul[@class="facetwp-results"]/li/a/@href')
 
 for link in links:
-    scraperwiki.sqlite.save(unique_keys=['url'], data={"name": "test", "url": link})
+    parse_page(link)
 
 #
 # # Write out to the sqlite database using scraperwiki library
