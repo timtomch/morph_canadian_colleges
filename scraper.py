@@ -14,7 +14,7 @@ def parse_page(url):
     college_name = response.xpath('//*[@class="page-title"]/text()')[0]
     college_url = response.xpath('//*[@class="mem-contact"]/p[2]//a/@href')[0]
     
-    scraperwiki.sqlite.save(data={"college_name": college_name, "college_url": college_url})
+    scraperwiki.sqlite.save(unique_keys=['college_url'], data={"college_name": college_name, "college_url": college_url})
 
 # # Read in a page
 html = scraperwiki.scrape("http://labs.timtom.ch/swc-teaching-notes/webscraping/data/www.collegesinstitutes.ca/our-members/member-directory/")
