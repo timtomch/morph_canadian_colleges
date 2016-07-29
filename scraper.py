@@ -19,9 +19,12 @@ def parse_page(url):
     
     print "Successfully scraped %s in %s" % (college_name, college_city)
     
-    college_nrcampuses = response.xpath('//*[@class="mem-stats"]/div[1]/h2/text()')
-    print "Found %s campuses" % college_nrcampuses
-    
+    try:
+        college_nrcampuses = response.xpath('//*[@class="mem-stats"]/div[1]/h2/text()')[0]
+        print "Found %s campuses" % college_nrcampuses
+    except:
+        college_nrcampuses = ''
+        print "No campus information found"
     college_stats = response.xpath('//*[@class="mem-stats"]/div[2]/ul//li')
     
     enrol = {}
@@ -43,11 +46,11 @@ def parse_page(url):
                                 "city": college_city,
                                 "postalcode": college_postalcode,
                                 "nr_campus": college_nrcampuses,
-                                "enrol_fulltime": enrol.get('Full-time', None),
-                                "enrol_parttime": enrol.get('Part-time', None),
-                                "enrol_international": enrol.get('International', None),
-                                "enrol_apprentice": enrol.get('Apprentice', None),
-                                "enrol_indigenous": enrol.get('Indigenous', None)
+                                "enrol_fulltime": enrol.get('Full-time', ''),
+                                "enrol_parttime": enrol.get('Part-time', ''),
+                                "enrol_international": enrol.get('International', ''),
+                                "enrol_apprentice": enrol.get('Apprentice', ''),
+                                "enrol_indigenous": enrol.get('Indigenous', '')
                                 })
 
 # # Read in a page
