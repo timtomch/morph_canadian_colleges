@@ -22,8 +22,7 @@ def parse_page(url):
     
     college_stats = response.xpath('//*[@class="mem-stats"]/div[2]/ul//li')
     
-    #enrol = {'Full-time': '', 'Part-time': '', 'International': '', 'Apprentice': '', 'Indigenous': ''}
-    
+    enrol = {}
     
     for stat in college_stats:
         to_parse = lxml.html.fromstring(stat)
