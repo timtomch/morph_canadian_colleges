@@ -15,7 +15,10 @@ def parse_page(url):
     college_url = response.xpath('//*[@class="mem-contact"]/p[2]//a/@href')[0]
     college_address = response.xpath('//*[@class="mem-contact"]/p[1]/text()[1]')[0]
     college_city = response.xpath('//*[@class="mem-contact"]/p[1]/text()[2]')[0]
-    college_postalcode = response.xpath('//*[@class="mem-contact"]/p[1]/text()[3]')[0]
+    try:
+        college_postalcode = response.xpath('//*[@class="mem-contact"]/p[1]/text()[3]')[0]
+    except:
+        college_postalcode = ''
     
     #print "Successfully scraped %s in %s" % (college_name.decode('utf-8'), college_city)
     
