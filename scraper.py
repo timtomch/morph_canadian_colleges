@@ -17,7 +17,7 @@ def parse_page(url):
     scraperwiki.sqlite.save(unique_keys=['college_url'], data={"college_name": college_name, "college_url": college_url})
 
 # # Read in a page
-html = scraperwiki.scrape("http://labs.timtom.ch/swc-teaching-notes/webscraping/data/www.collegesinstitutes.ca/our-members/member-directory/")
+html = scraperwiki.scrape("http://www.collegesinstitutes.ca/our-members/member-directory/")
 #
 # # Find something on the page using css selectors
 root = lxml.html.fromstring(html)
