@@ -34,8 +34,8 @@ def parse_page(url):
     
     for stat in college_stats:
         #to_parse = lxml.html.fromstring(stat)
-        value = stat.xpath('//h2')[0]
-        label = stat.xpath('//h6')[0]
+        value = stat.xpath('//h2/text()')[0]
+        label = stat.xpath('//h6/text()')[0]
         
         enrol[label] = value
     print "Enrolment stats:"
